@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Quiz</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #220046, #8300ff, #00ffe7, #3b00ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #eee;
+            padding: 40px 15px;
+        }
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .quiz-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 600px;
+            max-width: 100%;
+            color: #fff;
+        }
+        h2 {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #9c8de0;
+        }
+        p {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        input[type=radio] {
+            margin-right: 10px;
+            accent-color: #7158e2;
+            cursor: pointer;
+        }
+        button {
+            margin-top: 25px;
+            padding: 12px 0;
+            width: 100%;
+            background: #7158e2;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #5a44c9;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Quiz</h2>
+        <form method="POST" action="{{ url_for('quiz') }}">
+            {% for skill in skills %}
+                <h3>Skill: {{ skill }}</h3>
+                {% for question in questions[skill] %}
+                    <p><strong>Q{{ loop.index }}. {{ question.question }}</strong></p>
+                    <label><input type="radio" name="{{ skill }}_{{ loop.index0 }}" value="A" required /> A. {{ question.A }}</label>
+                    <label><input type="radio" name="{{ skill }}_{{ loop.index0 }}" value="B" /> B. {{ question.B }}</label>
+                    <label><input type="radio" name="{{ skill }}_{{ loop.index0 }}" value="C" /> C. {{ question.C }}</label>
+                    <label><input type="radio" name="{{ skill }}_{{ loop.index0 }}" value="D" /> D. {{ question.D }}</label>
+                {% endfor %}
+            {% endfor %}
+            <button type="submit">Submit Answers</button>
+        </form>
+    </div>
+</body>
+</html>

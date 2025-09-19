@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Results</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #220046, #8300ff, #00ffe7, #3b00ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #eee;
+            padding: 40px 15px;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .results-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 600px;
+            max-width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 30px;
+        }
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #9c8de0;
+        }
+        p {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 0;
+            margin-bottom: 30px;
+            list-style: none;
+        }
+        li {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .answer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .answers-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 6px;
+        }
+        .answer-label {
+            font-weight: 500;
+            padding: 5px 20px;
+            border-radius: 8px;
+            background: rgba(60,40,120,0.18);
+            color: #ffe;
+        }
+        a.button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 30px;
+            background: #7158e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+        a.button:hover {
+            background: #5a44c9;
+        }
+        strong.message {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #40c057;
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        <h2>Results for {{ student.name }}</h2>
+
+        {% for skill, score in scores.items() %}
+            <h3>Skill: {{ skill }}</h3>
+            <p>Score: {{ score.correct }} / {{ score.total }}</p>
+
+            {% if score.correct > score.total / 2 %}
+                <strong class="message">
+                    Great job! You have scored well in {{ skill }}.<br>
+                    Consider trying personalized internships in this subject to enhance your skills further.
+                </strong>
+            {% else %}
+                <p>Keep practicing to improve your score in {{ skill }}!</p>
+            {% endif %}
+
+            <ul>
+            {% for idx in range(score.total) %}
+                <li>
+                    <div class="answer-section">
+                        <div><strong>Q{{ idx + 1 }}</strong></div>
+                        <div class="answers-row">
+                            <span class="answer-label">Your answer: {{ answers[skill][idx] }}</span>
+                            <span class="answer-label">Correct answer: {{ questions[skill][idx].answer }}</span>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+
+        <a href="{{ url_for('index') }}" class="button">Take Another Quiz</a>
+    </div>
+</body>
+</html>

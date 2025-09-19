@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Student Details & Skills</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #220046, #8300ff, #00ffe7, #3b00ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #eee;
+            padding: 40px;
+        }
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 600px;
+            max-width: 100%;
+            color: #fff;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        button {
+            margin-top: 25px;
+            padding: 12px 0;
+            width: 100%;
+            background: #7158e2;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #5a44c9;
+        }
+        .error {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Student Details and Skills</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/">
+            <label>Full Name:</label>
+            <input type="text" name="student_name" required />
+
+            <label>Email:</label>
+            <input type="email" name="student_email" required />
+
+            <label>Roll Number:</label>
+            <input type="text" name="student_roll" required />
+
+            <label>Skills (comma separated):</label>
+            <input type="text" name="skills" />
+
+            <button type="submit">Generate Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
